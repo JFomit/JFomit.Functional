@@ -210,7 +210,11 @@ public readonly struct Option<T> : IEnumerable<T>, IComparable<Option<T>>, IEqua
     /// <inheritdoc cref="object.GetHashCode()"/>
     public override int GetHashCode()
     {
+#if NETSTANDARD2_0_OR_GREATER
+        return (IsSome ? _value?.GetHashCode() : default(T)?.GetHashCode()) ?? 0;
+#else
         return IsSome ? HashCode.Combine(_value) : HashCode.Combine(default(T));
+#endif
     }
 
     public static bool operator ==(Option<T> left, Option<T> right) => left.Equals(right);

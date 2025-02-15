@@ -84,7 +84,11 @@ public static class ResultExtensions
     /// <typeparam name="TContext">The context type.</typeparam>
     /// <returns>A <see cref="Result{TSuccess,TError}"/> containing projected value.
     /// If <paramref name="result"/> is <see cref="Prelude.Error{E}"/>, that error is returned instead.</returns>
-    public static Result<TResult, E> Select<T, TResult, E, TContext>(this Result<T, E> result, TContext context, [InstantHandle] Func<T, TContext, TResult> func) => result.IsError ? Error(result.Error) : Ok(func(result.Success, context));
+    public static Result<TResult, E> Select<T, TResult, E, TContext>(this Result<T, E> result, TContext context, [InstantHandle] Func<T, TContext, TResult> func)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
+        => result.IsError ? Error(result.Error) : Ok(func(result.Success, context));
 
     /// <summary>
     /// Projects the value inside a <see cref="Result{TSuccess,TError}"/> to another <see cref="Result{TSuccess,TError}"/>
@@ -111,7 +115,11 @@ public static class ResultExtensions
     /// <typeparam name="TContext">The context type.</typeparam>
     /// <returns>A <see cref="Result{TSuccess,TError}"/> containing projected value.
     /// If <paramref name="result"/> is <see cref="Prelude.Error{E}"/>, that error is returned instead.</returns>
-    public static Result<TResult, E> SelectMany<T, TResult, E, TContext>(this Result<T, E> result, TContext context, [InstantHandle] Func<T, TContext, Result<TResult, E>> func) => result.IsError ? Error(result.Error) : func(result.Success, context);
+    public static Result<TResult, E> SelectMany<T, TResult, E, TContext>(this Result<T, E> result, TContext context, [InstantHandle] Func<T, TContext, Result<TResult, E>> func)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
+        => result.IsError ? Error(result.Error) : func(result.Success, context);
 
     /// <summary>
     /// Invokes an action if a <see cref="Result{TSuccess,TError}"/> is <see cref="Prelude.Ok{T}"/>. 
@@ -140,6 +148,9 @@ public static class ResultExtensions
     public static void IFOk<T, E, TContext>(this Result<T, E> result,
         TContext context,
         [InstantHandle] Action<T, TContext> action)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         if (result.IsSuccess)
         {
@@ -174,6 +185,9 @@ public static class ResultExtensions
     public static void IfError<T, E, TContext>(this Result<T, E> result,
         TContext context,
         [InstantHandle] Action<E, TContext> action)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         if (result.IsError)
         {
@@ -215,8 +229,11 @@ public static class ResultExtensions
     public static TResult Match<T, E, TResult, TContext>(this Result<T, E> result,
         TContext context,
         [InstantHandle] Func<T, TContext, TResult> ok,
-        [InstantHandle] Func<E, TContext, TResult> fail) =>
-        result.IsError
+        [InstantHandle] Func<E, TContext, TResult> fail)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
+        => result.IsError
             ? fail(result.Error,
                 context)
             : ok(result.Success,
@@ -258,6 +275,9 @@ public static class ResultExtensions
         TContext context,
         [InstantHandle] Action<T, TContext> ok,
         [InstantHandle] Action<E, TContext> fail)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         if (result.IsError)
         {

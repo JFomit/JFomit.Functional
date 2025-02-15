@@ -45,6 +45,8 @@ public static class Prelude
     /// </summary>
     public static NoneVariant None => new();
 
+#if NETSTANDARD2_0
+#else
     /// <summary>
     /// Tries to parse an instance of <typeparamref name="T"/> from <paramref name="s"/> according to
     /// <paramref name="provider"/>.
@@ -55,6 +57,7 @@ public static class Prelude
     /// <returns><see cref="Some{T}"/> if successful; <see cref="None"/>, otherwise.</returns>
     public static Option<T> Parse<T>(string? s, IFormatProvider? provider = null)
         where T : IParsable<T> => T.TryParse(s, provider, out var value) ? Some(value) : None;
+#endif
 
     /// <summary>
     /// Gets the value associated with the specified key.

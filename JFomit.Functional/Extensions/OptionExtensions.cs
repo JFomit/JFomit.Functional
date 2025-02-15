@@ -68,6 +68,9 @@ public static class OptionExtensions
         this Option<T> option,
         TContext context,
         [InstantHandle] Func<T, TContext, Option<TResult>> func)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
         => option.IsNone ? Prelude.None : func(option.Value, context);
 
     /// <summary>
@@ -102,6 +105,9 @@ public static class OptionExtensions
         this Option<T> option,
         TContext context,
         [InstantHandle] Func<T, TContext, TResult> selector)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
         => option.TryUnwrap(out var value) ? Prelude.Some(selector(value, context)!) : Prelude.None;
 
     /// <summary>
@@ -131,6 +137,9 @@ public static class OptionExtensions
         this Option<T> option,
         TContext context,
         [InstantHandle] Func<T, TContext, bool> predicate)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
         => option.TryUnwrap(out var value) && predicate(value, context) ? Prelude.Some(value) : Prelude.None;
 
     /// <summary>
@@ -169,6 +178,9 @@ public static class OptionExtensions
         this Option<T> option,
         TContext context,
         [InstantHandle] Func<T, TContext, bool> predicate)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
         => option.TryUnwrap(out var value) && predicate(value, context);
 
     /// <inheritdoc cref="Any{T}(JFomit.Functional.Monads.Option{T}, Func{T,bool})"/>
@@ -179,6 +191,9 @@ public static class OptionExtensions
         this Option<T> option,
         TContext context,
         [InstantHandle] Func<T, TContext, bool> predicate)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
         => Any(option, context, predicate);
 
     /// <inheritdoc cref="Option{T}.Unwrap"/>
@@ -214,6 +229,9 @@ public static class OptionExtensions
     /// <typeparam name="T">The type.</typeparam>
     /// <typeparam name="TContext">The context type.</typeparam>
     public static void IfSome<T, TContext>(this Option<T> option, TContext context, [InstantHandle] Action<T, TContext> action)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         if (option.IsSome)
         {
@@ -245,6 +263,9 @@ public static class OptionExtensions
     /// <typeparam name="T">The type.</typeparam>
     /// <typeparam name="TContext">The context type.</typeparam>
     public static void IfNone<T, TContext>(this Option<T> option, TContext context, [InstantHandle] Action<TContext> action)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         if (option.IsNone)
         {
@@ -285,8 +306,11 @@ public static class OptionExtensions
     public static TResult Match<T, TResult, TContext>(this Option<T> option,
         TContext context,
         [InstantHandle] Func<T, TContext, TResult> ok,
-        [InstantHandle] Func<TContext, TResult> err) =>
-        option.IsNone
+        [InstantHandle] Func<TContext, TResult> err)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
+        => option.IsNone
             ? err(context)
             : ok(option.Value,
                 context);
@@ -327,6 +351,9 @@ public static class OptionExtensions
         TContext context,
         [InstantHandle] Action<T, TContext> ok,
         [InstantHandle] Action<TContext> err)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         if (option.IsNone)
         {

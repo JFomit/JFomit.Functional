@@ -49,7 +49,11 @@ public static class OneOfExtensions
         this OneOf<T1, T2> oneOf,
         TContext context,
         [InstantHandle] Func<T1, TContext, TResult> t1,
-        [InstantHandle] Func<T2, TContext, TResult> t2) => oneOf switch
+        [InstantHandle] Func<T2, TContext, TResult> t2)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
+        => oneOf switch
         {
             OneOf<T1, T2>.GenericVariant<T1> variant => t1(variant.Value, context),
             OneOf<T1, T2>.GenericVariant<T2> variant => t2(variant.Value, context),
@@ -98,6 +102,9 @@ public static class OneOfExtensions
         TContext context,
         [InstantHandle] Action<T1, TContext> t1,
         [InstantHandle] Action<T2, TContext> t2)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         switch (oneOf)
         {
@@ -156,7 +163,11 @@ public static class OneOfExtensions
         TContext context,
         [InstantHandle] Func<T1, TContext, TResult> t1,
         [InstantHandle] Func<T2, TContext, TResult> t2,
-        [InstantHandle] Func<T3, TContext, TResult> t3) => oneOf switch
+        [InstantHandle] Func<T3, TContext, TResult> t3)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
+        => oneOf switch
         {
             OneOf<T1, T2, T3>.GenericVariant<T1> variant => t1(variant.Value, context),
             OneOf<T1, T2, T3>.GenericVariant<T2> variant => t2(variant.Value, context),
@@ -217,6 +228,9 @@ public static class OneOfExtensions
         [InstantHandle] Action<T1, TContext> t1,
         [InstantHandle] Action<T2, TContext> t2,
         [InstantHandle] Action<T3, TContext> t3)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         switch (oneOf)
         {
@@ -286,7 +300,11 @@ public static class OneOfExtensions
         [InstantHandle] Func<T1, TContext, TResult> t1,
         [InstantHandle] Func<T2, TContext, TResult> t2,
         [InstantHandle] Func<T3, TContext, TResult> t3,
-        [InstantHandle] Func<T4, TContext, TResult> t4) => oneOf switch
+        [InstantHandle] Func<T4, TContext, TResult> t4)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
+        => oneOf switch
         {
             OneOf<T1, T2, T3, T4>.GenericVariant<T1> variant => t1(variant.Value, context),
             OneOf<T1, T2, T3, T4>.GenericVariant<T2> variant => t2(variant.Value, context),
@@ -355,6 +373,9 @@ public static class OneOfExtensions
         Action<T2, TContext> t2,
         Action<T3, TContext> t3,
         Action<T4, TContext> t4)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         switch (oneOf)
         {
