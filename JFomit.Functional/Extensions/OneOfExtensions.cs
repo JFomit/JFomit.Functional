@@ -7,7 +7,7 @@ using static JFomit.Functional.Prelude;
 namespace JFomit.Functional.Extensions;
 
 /// <summary>
-/// Provides common operations on OneOf-like types.
+/// Contains common operations on OneOf-like types.
 /// </summary>
 [PublicAPI]
 public static class OneOfExtensions
@@ -394,7 +394,7 @@ public static class OneOfExtensions
 
         throw new WrongUnwrapException($"Tried to get a value of type {typeof(T).FullName} from {genericOneOf.GetType().FullName}.");
     }
-    
+
     /// <summary>
     /// Extracts the value of type <typeparamref name="T"/> from a given <see cref="IOneOf"/>,
     /// returning <paramref name="other"/> if <paramref name="genericOneOf"/> isn't of type <typeparamref name="T"/>.
