@@ -200,17 +200,17 @@ public static class ResultExtensions
     /// </summary>
     /// <param name="result">The <see cref="Result{TSuccess,TError}"/> to match.</param>
     /// <param name="ok">The delegate to call if matched <see cref="Prelude.Ok{T}"/> variant.</param>
-    /// <param name="fail">The delegate to call if matched <see cref="Prelude.Error{E}"/> variant.</param>
+    /// <param name="error">The delegate to call if matched <see cref="Prelude.Error{E}"/> variant.</param>
     /// <typeparam name="T">The <see cref="Prelude.Ok{T}"/> type.</typeparam>
     /// <typeparam name="E">The <see cref="Prelude.Error{E}"/> type.</typeparam>
     /// <typeparam name="TResult">The resulting type.</typeparam>
     /// <returns>An instance of <typeparamref name="TResult"/> from invoking either <paramref name="ok"/>
-    /// or <paramref name="fail"/>.</returns>
+    /// or <paramref name="error"/>.</returns>
     public static TResult Match<T, E, TResult>(this Result<T, E> result,
         [InstantHandle] Func<T, TResult> ok,
-        [InstantHandle] Func<E, TResult> fail) =>
+        [InstantHandle] Func<E, TResult> error) =>
         result.IsError
-            ? fail(result.Error)
+            ? error(result.Error)
             : ok(result.Success);
     /// <summary>
     /// Matches on a <see cref="Result{TSuccess,TError}"/> and invokes the appropriate delegate with
@@ -219,22 +219,22 @@ public static class ResultExtensions
     /// <param name="result">The <see cref="Result{TSuccess,TError}"/> to match.</param>
     /// <param name="context">The context to pass.</param>
     /// <param name="ok">The delegate to call if matched <see cref="Prelude.Ok{T}"/> variant.</param>
-    /// <param name="fail">The delegate to call if matched <see cref="Prelude.Error{E}"/> variant.</param>
+    /// <param name="error">The delegate to call if matched <see cref="Prelude.Error{E}"/> variant.</param>
     /// <typeparam name="T">The <see cref="Prelude.Ok{T}"/> type.</typeparam>
     /// <typeparam name="E">The <see cref="Prelude.Error{E}"/> type.</typeparam>
     /// <typeparam name="TResult">The resulting type.</typeparam>
     /// <typeparam name="TContext">The context type.</typeparam>
     /// <returns>An instance of <typeparamref name="TResult"/> from invoking either <paramref name="ok"/>
-    /// or <paramref name="fail"/>.</returns>
+    /// or <paramref name="error"/>.</returns>
     public static TResult Match<T, E, TResult, TContext>(this Result<T, E> result,
         TContext context,
         [InstantHandle] Func<T, TContext, TResult> ok,
-        [InstantHandle] Func<E, TContext, TResult> fail)
+        [InstantHandle] Func<E, TContext, TResult> error)
 #if NET9_0_OR_GREATER
         where TContext : allows ref struct
 #endif
         => result.IsError
-            ? fail(result.Error,
+            ? error(result.Error,
                 context)
             : ok(result.Success,
                 context);
@@ -244,16 +244,16 @@ public static class ResultExtensions
     /// </summary>
     /// <param name="result">The <see cref="Result{TSuccess,TError}"/> to switch on.</param>
     /// <param name="ok">The delegate to call if matched <see cref="Prelude.Ok{T}"/> variant.</param>
-    /// <param name="fail">The delegate to call if matched <see cref="Prelude.Error{E}"/> variant.</param>
+    /// <param name="error">The delegate to call if matched <see cref="Prelude.Error{E}"/> variant.</param>
     /// <typeparam name="T">The <see cref="Prelude.Ok{T}"/> type.</typeparam>
     /// <typeparam name="E">The <see cref="Prelude.Error{E}"/> type.</typeparam>
     public static void Switch<T, E>(this Result<T, E> result,
         [InstantHandle] Action<T> ok,
-        [InstantHandle] Action<E> fail)
+        [InstantHandle] Action<E> error)
     {
         if (result.IsError)
         {
-            fail(result.Error);
+            error(result.Error);
         }
         else
         {
@@ -267,21 +267,21 @@ public static class ResultExtensions
     /// <param name="result">The <see cref="Result{TSuccess,TError}"/> to switch on.</param>
     /// <param name="context">The context to pass.</param>
     /// <param name="ok">The delegate to call if matched <see cref="Prelude.Ok{T}"/> variant.</param>
-    /// <param name="fail">The delegate to call if matched <see cref="Prelude.Error{E}"/> variant.</param>
+    /// <param name="error">The delegate to call if matched <see cref="Prelude.Error{E}"/> variant.</param>
     /// <typeparam name="T">The <see cref="Prelude.Ok{T}"/> type.</typeparam>
     /// <typeparam name="E">The <see cref="Prelude.Error{E}"/> type.</typeparam>
     /// <typeparam name="TContext">The context type.</typeparam>
     public static void Switch<T, E, TContext>(this Result<T, E> result,
         TContext context,
         [InstantHandle] Action<T, TContext> ok,
-        [InstantHandle] Action<E, TContext> fail)
+        [InstantHandle] Action<E, TContext> error)
 #if NET9_0_OR_GREATER
         where TContext : allows ref struct
 #endif
     {
         if (result.IsError)
         {
-            fail(result.Error, context);
+            error(result.Error, context);
         }
         else
         {

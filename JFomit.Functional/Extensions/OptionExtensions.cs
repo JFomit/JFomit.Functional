@@ -277,18 +277,18 @@ public static class OptionExtensions
     /// Matches the given <see cref="Option{T}"/> and invokes a matching variant delegate.
     /// </summary>
     /// <param name="option">The option to match on.</param>
-    /// <param name="ok">The <see cref="Func{T,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.Some{T}"/>.</param>
-    /// <param name="err">The <see cref="Func{TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.None"/>.</param>
+    /// <param name="some">The <see cref="Func{T,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.Some{T}"/>.</param>
+    /// <param name="none">The <see cref="Func{TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.None"/>.</param>
     /// <typeparam name="T">The type.</typeparam>
     /// <typeparam name="TResult">The resulting type.</typeparam>
-    /// <returns>An object of <typeparamref name="TResult"/> - result of invoking either <paramref name="ok"/>
-    /// or <paramref name="err"/>.</returns>
+    /// <returns>An object of <typeparamref name="TResult"/> - result of invoking either <paramref name="some"/>
+    /// or <paramref name="none"/>.</returns>
     public static TResult Match<T, TResult>(this Option<T> option,
-        [InstantHandle] Func<T, TResult> ok,
-        [InstantHandle] Func<TResult> err) =>
+        [InstantHandle] Func<T, TResult> some,
+        [InstantHandle] Func<TResult> none) =>
         option.IsNone
-            ? err()
-            : ok(option.Value);
+            ? none()
+            : some(option.Value);
 
     /// <summary>
     /// Matches the given <see cref="Option{T}"/> and invokes a matching variant delegate,
@@ -296,44 +296,44 @@ public static class OptionExtensions
     /// </summary>
     /// <param name="option">The option to match on.</param>
     /// <param name="context">The context to pass.</param>
-    /// <param name="ok">The <see cref="Func{T,TContext,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.Some{T}"/>.</param>
-    /// <param name="err">The <see cref="Func{TContext,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.None"/>.</param>
+    /// <param name="some">The <see cref="Func{T,TContext,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.Some{T}"/>.</param>
+    /// <param name="none">The <see cref="Func{TContext,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.None"/>.</param>
     /// <typeparam name="T">The type.</typeparam>
     /// <typeparam name="TResult">The resulting type.</typeparam>
     /// <typeparam name="TContext">The context type.</typeparam>
-    /// <returns>An object of <typeparamref name="TResult"/> - result of invoking either <paramref name="ok"/>
-    /// or <paramref name="err"/>.</returns>
+    /// <returns>An object of <typeparamref name="TResult"/> - result of invoking either <paramref name="some"/>
+    /// or <paramref name="none"/>.</returns>
     public static TResult Match<T, TResult, TContext>(this Option<T> option,
         TContext context,
-        [InstantHandle] Func<T, TContext, TResult> ok,
-        [InstantHandle] Func<TContext, TResult> err)
+        [InstantHandle] Func<T, TContext, TResult> some,
+        [InstantHandle] Func<TContext, TResult> none)
 #if NET9_0_OR_GREATER
         where TContext : allows ref struct
 #endif
         => option.IsNone
-            ? err(context)
-            : ok(option.Value,
+            ? none(context)
+            : some(option.Value,
                 context);
 
     /// <summary>
     /// Switches on the given <see cref="Option{T}"/> and invokes a matching variant action.
     /// </summary>
     /// <param name="option">The option to switch on.</param>
-    /// <param name="ok">The <see cref="Action{T,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.Some{T}"/>.</param>
-    /// <param name="err">The <see cref="Action{TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.None"/>.</param>
+    /// <param name="some">The <see cref="Action{T,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.Some{T}"/>.</param>
+    /// <param name="none">The <see cref="Action{TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.None"/>.</param>
     /// <typeparam name="T">The type.</typeparam>
     public static void Switch<T>(
         this Option<T> option,
-        [InstantHandle] Action<T> ok,
-        [InstantHandle] Action err)
+        [InstantHandle] Action<T> some,
+        [InstantHandle] Action none)
     {
         if (option.IsNone)
         {
-            err();
+            none();
         }
         else
         {
-            ok(option.Value);
+            some(option.Value);
         }
     }
     /// <summary>
@@ -342,26 +342,26 @@ public static class OptionExtensions
     /// </summary>
     /// <param name="option">The option to switch on.</param>
     /// <param name="context">The context to pass.</param>
-    /// <param name="ok">The <see cref="Action{T,TContext,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.Some{T}"/>.</param>
-    /// <param name="err">The <see cref="Action{TContext,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.None"/>.</param>
+    /// <param name="some">The <see cref="Action{T,TContext,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.Some{T}"/>.</param>
+    /// <param name="none">The <see cref="Action{TContext,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.None"/>.</param>
     /// <typeparam name="T">The type.</typeparam>
     /// <typeparam name="TContext">The context type.</typeparam>
     public static void Switch<T, TContext>(
         this Option<T> option,
         TContext context,
-        [InstantHandle] Action<T, TContext> ok,
-        [InstantHandle] Action<TContext> err)
+        [InstantHandle] Action<T, TContext> some,
+        [InstantHandle] Action<TContext> none)
 #if NET9_0_OR_GREATER
         where TContext : allows ref struct
 #endif
     {
         if (option.IsNone)
         {
-            err(context);
+            none(context);
         }
         else
         {
-            ok(option.Value, context);
+            some(option.Value, context);
         }
     }
 
