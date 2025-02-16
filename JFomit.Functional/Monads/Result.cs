@@ -91,12 +91,14 @@ public readonly struct Result<TSuccess, TError>
     /// </summary>
     /// <param name="ok">The value to convert.</param>
     /// <returns>An <see cref="Prelude.Ok{T}"/> variant of <see cref="Result{TSuccess,TError}"/>.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator Result<TSuccess, TError>(OkVariant<TSuccess> ok) => new(ok.Success);
     /// <summary>
     /// Converts a given <see cref="FailVariant{TError}"/> to a <see cref="Result{TSuccess,TError}"/>.
     /// </summary>
     /// <param name="fail">The value to convert.</param>
     /// <returns>An <see cref="Prelude.Error{E}"/> variant of <see cref="Result{TSuccess,TError}"/>.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator Result<TSuccess, TError>(FailVariant<TError> fail) => new(fail.Error);
 
     /// <inheritdoc cref="object.ToString"/>
