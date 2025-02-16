@@ -28,7 +28,8 @@
     "resource": [
       {
         "files": [
-          "images/**"
+          "images/**",
+          "icon.png"
         ]
       }
     ],
@@ -40,6 +41,7 @@
     "globalMetadata": {
       "_appName": "JFomit.Functional",
       "_appTitle": "JFomit.Functional",
+      "_appLogoPath": "icon.png",
       "_enableSearch": true,
       "pdf": false
     }

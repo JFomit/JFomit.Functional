@@ -13,10 +13,13 @@
       *  Option&lt;T&gt; - wraps a value that might not exist in a safe manner;
       *  Result&lt;T, E&gt; - wraps a value that might not exist due to some processing error;
       *  OneOf&lt;T1, T2, T3&gt; - discriminated union on one of T1, T2 or T3.
+      See more at https://github.com/JFomit/JFomit.Functional.
     </Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageProjectUrl>https://jfomit.github.io/JFomit.Functional/index.html</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/JFomit/JFomit.Functional</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl>https://github.com/JFomit/JFomit.Functional/blob/master/icon.png</PackageIconUrl>
 
     <LangVersion>13</LangVersion>
     <DefineConstants>JETBRAINS_ANNOTATIONS</DefineConstants>
@@ -48,6 +51,7 @@
     </PackageReference>
     <None Include="$(MSBuildThisFileDirectory)\..\LICENSE.md" Pack="true" PackagePath="" Visible="false" />
     <None Include="$(MSBuildThisFileDirectory)\..\README.md" Pack="true" PackagePath="" />
+    <None Include="$(MSBuildThisFileDirectory)\..\icon.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
