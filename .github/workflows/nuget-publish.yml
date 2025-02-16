@@ -36,7 +36,11 @@ jobs:
 
       # Create the NuGet package in the folder from the environment variable NuGetDirectory
       - run: dotnet build --configuration Release
+<<<<<<< HEAD
           dotnet pack --configuration Release --output ${{ env.NuGetDirectory }}
+=======
+      - run: dotnet pack --configuration Release --output ${{ env.NuGetDirectory }}
+>>>>>>> 50e0c34 (Fixed implicit build jobs not running.)
 
       # Publish the NuGet package as an artifact, so they can be used in the following jobs
       - uses: actions/upload-artifact@v4
