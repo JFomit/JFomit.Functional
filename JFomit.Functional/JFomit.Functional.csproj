@@ -7,7 +7,7 @@
     <Title>JFomit.Functional</Title>
     <Authors>JFomit</Authors>
     <Version>1.0.0</Version>
-    <PackageTags>Functional;Option;Result;OneOf;Discriminated Union</PackageTags>
+    <PackageTags>Functional;Option;Result;OneOf;Discriminated Union;Library</PackageTags>
     <Description>
       This library provides common functional types and operations on them:
       *  Option&lt;T&gt; - wraps a value that might not exist in a safe manner;
@@ -35,6 +35,7 @@
 
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">True</ContinuousIntegrationBuild>
+    <GenerateSBOM>true</GenerateSBOM>
   </PropertyGroup>
 
   <ItemGroup>
@@ -49,6 +50,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Sbom.Targets" Version="3.0.0" PrivateAssets="All" />
     <None Include="$(MSBuildThisFileDirectory)\..\LICENSE.md" Pack="true" PackagePath="" Visible="false" />
     <None Include="$(MSBuildThisFileDirectory)\..\README.md" Pack="true" PackagePath="" />
     <None Include="$(MSBuildThisFileDirectory)\..\icon.png" Pack="true" PackagePath="\"/>
