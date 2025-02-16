@@ -22,8 +22,8 @@ Console.WriteLine("Enter a number:");
 
 Option<int> parsedValue = Parse<int>(Console.ReadLine());
 parsedValue.Select(n => n * n).Switch(
-    ok: (int value) => Console.WriteLine($"Your number squared is {value}!"),
-    err: () => Console.WriteLine("Failed to parse an number :_(")
+    some: (int value) => Console.WriteLine($"Your number squared is {value}!"),
+    none: () => Console.WriteLine("Failed to parse an number :_(")
 );
 
 static Option<int> Parse<T>(string? s)
