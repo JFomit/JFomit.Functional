@@ -55,6 +55,7 @@ public static class Prelude
     /// <param name="provider">The <see cref="IFormatProvider"/>.</param>
     /// <typeparam name="T">The type.</typeparam>
     /// <returns><see cref="Some{T}"/> if successful; <see cref="None"/>, otherwise.</returns>
+    [Pure]
     public static Option<T> Parse<T>(string? s, IFormatProvider? provider = null)
         where T : IParsable<T> => T.TryParse(s, provider, out var value) ? Some(value) : None;
 #endif
@@ -67,6 +68,7 @@ public static class Prelude
     /// <typeparam name="TKey">The key type.</typeparam>
     /// <typeparam name="TValue">The value type.</typeparam>
     /// <returns><see cref="Some{T}"/> if value was successfully found; otherwise, <see cref="None"/>.</returns>
+    [Pure]
     public static Option<TValue?> GetValue<TKey, TValue>(this IDictionary<TKey, TValue> dict,
         TKey key) =>
         (dict.TryGetValue(key, out var value)
