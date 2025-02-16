@@ -46,9 +46,7 @@ public readonly struct Option<T> : IEnumerable<T>, IComparable<Option<T>>, IEqua
 
     private readonly T _value;
 
-    /// <summary>
-    /// Don't use this constructor.
-    /// </summary>
+    /// <exclude/>
     [Obsolete("Options can only be constructed with methods, such as Prelude.Some(T).", true)]
     public Option()
     {

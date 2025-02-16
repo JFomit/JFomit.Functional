@@ -498,6 +498,7 @@ public static class OneOfExtensions
     /// is <typeparamref name="T"/>;
     /// otherwise, the default value for the type of the <paramref name="value"/> parameter.
     /// This parameter is passed uninitialized.</param>
+    /// <typeparam name="T">The type.</typeparam>
     /// <returns><see langword="true"/>, if extracted the value from <see cref="IOneOf"/>; false, otherwise.</returns>
     [Pure]
     public static bool TryUnwrap<T>(this IOneOf genericOneOf, out T value)
@@ -524,6 +525,8 @@ public static class OneOfExtensions
     /// If extraction to <paramref name="value"/> is successful, contains default value instead.
     /// This parameter is passed uninitialized.
     /// </param>
+    /// <typeparam name="T1">The first type.</typeparam>
+    /// <typeparam name="T2">The second type.</typeparam>
     /// <returns><see langword="true"/>, if extracted the value from <see cref="OneOf{T1,T2}"/>; false, otherwise.</returns>
     [Pure]
     public static bool TryUnwrap<T1, T2>(this OneOf<T1, T2> oneOf,
@@ -553,6 +556,8 @@ public static class OneOfExtensions
     /// If extraction to <paramref name="value"/> is successful, contains default value instead.
     /// This parameter is passed uninitialized.
     /// </param>
+    /// <typeparam name="T1">The first type.</typeparam>
+    /// <typeparam name="T2">The second type.</typeparam>
     /// <returns><see langword="true"/>, if extracted the value from <see cref="OneOf{T1,T2}"/>; false, otherwise.</returns>
     [Pure]
     public static bool TryUnwrap<T1, T2>(this OneOf<T1, T2> oneOf,
@@ -582,6 +587,9 @@ public static class OneOfExtensions
     /// If extraction to <paramref name="value"/> is successful, contains default value instead.
     /// This parameter is passed uninitialized.
     /// </param>
+    /// <typeparam name="T1">The first type.</typeparam>
+    /// <typeparam name="T2">The second type.</typeparam>
+    /// <typeparam name="T3">The third type.</typeparam>
     /// <returns><see langword="true"/>, if extracted the value from <see cref="OneOf{T1,T2,T3}"/>; false, otherwise.</returns>
     [Pure]
     public static bool TryUnwrap<T1, T2, T3>(this OneOf<T1, T2, T3> oneOf,
@@ -619,6 +627,9 @@ public static class OneOfExtensions
     /// If extraction to <paramref name="value"/> is successful, contains default value instead.
     /// This parameter is passed uninitialized.
     /// </param>
+    /// <typeparam name="T1">The first type.</typeparam>
+    /// <typeparam name="T2">The second type.</typeparam>
+    /// <typeparam name="T3">The third type.</typeparam>
     /// <returns><see langword="true"/>, if extracted the value from <see cref="OneOf{T1,T2,T3}"/>; false, otherwise.</returns>
     [Pure]
     public static bool TryUnwrap<T1, T2, T3>(this OneOf<T1, T2, T3> oneOf,
@@ -656,6 +667,9 @@ public static class OneOfExtensions
     /// If extraction to <paramref name="value"/> is successful, contains default value instead.
     /// This parameter is passed uninitialized.
     /// </param>
+    /// <typeparam name="T1">The first type.</typeparam>
+    /// <typeparam name="T2">The second type.</typeparam>
+    /// <typeparam name="T3">The third type.</typeparam>
     /// <returns><see langword="true"/>, if extracted the value from <see cref="OneOf{T1,T2,T3}"/>; false, otherwise.</returns>
     [Pure]
     public static bool TryUnwrap<T1, T2, T3>(this OneOf<T1, T2, T3> oneOf,
@@ -694,6 +708,10 @@ public static class OneOfExtensions
     /// If extraction to <paramref name="value"/> is successful, contains default value instead.
     /// This parameter is passed uninitialized.
     /// </param>
+    /// <typeparam name="T1">The first type.</typeparam>
+    /// <typeparam name="T2">The second type.</typeparam>
+    /// <typeparam name="T3">The third type.</typeparam>
+    /// <typeparam name="T4">The fourth type.</typeparam>
     /// <returns><see langword="true"/>, if extracted the value from <see cref="OneOf{T1,T2,T3,T4}"/>; false, otherwise.</returns>
     [Pure]
     public static bool TryUnwrap<T1, T2, T3, T4>(this OneOf<T1, T2, T3, T4> oneOf,
@@ -732,6 +750,10 @@ public static class OneOfExtensions
     /// If extraction to <paramref name="value"/> is successful, contains default value instead.
     /// This parameter is passed uninitialized.
     /// </param>
+    /// <typeparam name="T1">The first type.</typeparam>
+    /// <typeparam name="T2">The second type.</typeparam>
+    /// <typeparam name="T3">The third type.</typeparam>
+    /// <typeparam name="T4">The fourth type.</typeparam>
     /// <returns><see langword="true"/>, if extracted the value from <see cref="OneOf{T1,T2,T3,T4}"/>; false, otherwise.</returns>
     [Pure]
     public static bool TryUnwrap<T1, T2, T3, T4>(this OneOf<T1, T2, T3, T4> oneOf,
@@ -770,6 +792,10 @@ public static class OneOfExtensions
     /// If extraction to <paramref name="value"/> is successful, contains default value instead.
     /// This parameter is passed uninitialized.
     /// </param>
+    /// <typeparam name="T1">The first type.</typeparam>
+    /// <typeparam name="T2">The second type.</typeparam>
+    /// <typeparam name="T3">The third type.</typeparam>
+    /// <typeparam name="T4">The fourth type.</typeparam>
     /// <returns><see langword="true"/>, if extracted the value from <see cref="OneOf{T1,T2,T3,T4}"/>; false, otherwise.</returns>
     [Pure]
     public static bool TryUnwrap<T1, T2, T3, T4>(this OneOf<T1, T2, T3, T4> oneOf,
@@ -808,6 +834,10 @@ public static class OneOfExtensions
     /// If extraction to <paramref name="value"/> is successful, contains default value instead.
     /// This parameter is passed uninitialized.
     /// </param>
+    /// <typeparam name="T1">The first type.</typeparam>
+    /// <typeparam name="T2">The second type.</typeparam>
+    /// <typeparam name="T3">The third type.</typeparam>
+    /// <typeparam name="T4">The fourth type.</typeparam>
     /// <returns><see langword="true"/>, if extracted the value from <see cref="OneOf{T1,T2,T3,T4}"/>; false, otherwise.</returns>
     [Pure]
     public static bool TryUnwrap<T1, T2, T3, T4>(this OneOf<T1, T2, T3, T4> oneOf,
