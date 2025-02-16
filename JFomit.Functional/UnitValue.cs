@@ -14,7 +14,10 @@ public readonly record struct UnitValue
     /// </summary>
     public static UnitValue Unit => default;
 
+    /// <inheritdoc/>
     public bool Equals(UnitValue _) => true;
+    /// <inheritdoc/>
     public override int GetHashCode() => 1916020601;
+    /// <inheritdoc/>
     public override string ToString() => nameof(Unit);
 }

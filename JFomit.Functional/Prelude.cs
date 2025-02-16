@@ -45,21 +45,6 @@ public static class Prelude
     /// </summary>
     public static NoneVariant None => new();
 
-#if NETSTANDARD2_0
-#else
-    /// <summary>
-    /// Tries to parse an instance of <typeparamref name="T"/> from <paramref name="s"/> according to
-    /// <paramref name="provider"/>.
-    /// </summary>
-    /// <param name="s">The <see cref="String"/> to parse.</param>
-    /// <param name="provider">The <see cref="IFormatProvider"/>.</param>
-    /// <typeparam name="T">The type.</typeparam>
-    /// <returns><see cref="Some{T}"/> if successful; <see cref="None"/>, otherwise.</returns>
-    [Pure]
-    public static Option<T> Parse<T>(string? s, IFormatProvider? provider = null)
-        where T : IParsable<T> => T.TryParse(s, provider, out var value) ? Some(value) : None;
-#endif
-
     /// <summary>
     /// Gets the value associated with the specified key.
     /// </summary>
@@ -151,6 +136,10 @@ public static class Prelude
         }
     }
 
+    /// <summary>
+    /// Wraps a value into a <see cref="Monads.Variant{T}"/>.
+    /// </summary>
+    /// <returns>A <see cref="Monads.Variant{T}"/>. </returns>
     public static Variant<T> Variant<T>(T value) => new(value);
 
     /// <summary>
@@ -160,7 +149,7 @@ public static class Prelude
     /// <typeparam name="T1">The first type.</typeparam>
     /// <typeparam name="T2">The second type.</typeparam>
     /// <typeparam name="T3">The third type.</typeparam>
-    /// <returns>A flattened <see cref="ValueTuple{T1,T2,T3}"/>.</returns>
+    /// <returns>A flattened tuple.</returns>
     [Pure]
     public static (T1, T2, T3) Flatten<T1, T2, T3>(this ((T1, T2), T3) tuple) =>
         (tuple.Item1.Item1, tuple.Item1.Item2, tuple.Item2);
@@ -171,7 +160,7 @@ public static class Prelude
     /// <typeparam name="T1">The first type.</typeparam>
     /// <typeparam name="T2">The second type.</typeparam>
     /// <typeparam name="T3">The third type.</typeparam>
-    /// <returns>A flattened <see cref="ValueTuple{T1,T2,T3}"/>.</returns>
+    /// <returns>A flattened tuple.</returns>
     [Pure]
     public static (T1, T2, T3) Flatten<T1, T2, T3>(this (T1, (T2, T3)) tuple) =>
         (tuple.Item1, tuple.Item2.Item1, tuple.Item2.Item2);
@@ -184,7 +173,7 @@ public static class Prelude
     /// <typeparam name="T2">The second type.</typeparam>
     /// <typeparam name="T3">The third type.</typeparam>
     /// <typeparam name="T4">The fourth type.</typeparam>
-    /// <returns>A flattened <see cref="ValueTuple{T1,T2,T3,T4}"/>.</returns>
+    /// <returns>A flattened tuple.</returns>
     [Pure]
     public static (T1, T2, T3, T4) Flatten<T1, T2, T3, T4>(this ((T1, T2), T3, T4) tuple) =>
         (tuple.Item1.Item1, tuple.Item1.Item2, tuple.Item2, tuple.Item3);
@@ -196,7 +185,7 @@ public static class Prelude
     /// <typeparam name="T2">The second type.</typeparam>
     /// <typeparam name="T3">The third type.</typeparam>
     /// <typeparam name="T4">The fourth type.</typeparam>
-    /// <returns>A flattened <see cref="ValueTuple{T1,T2,T3,T4}"/>.</returns>
+    /// <returns>A flattened tuple.</returns>
     [Pure]
     public static (T1, T2, T3, T4) Flatten<T1, T2, T3, T4>(this (T1, (T2, T3), T4) tuple) =>
         (tuple.Item1, tuple.Item2.Item1, tuple.Item2.Item2, tuple.Item3);
@@ -208,7 +197,7 @@ public static class Prelude
     /// <typeparam name="T2">The second type.</typeparam>
     /// <typeparam name="T3">The third type.</typeparam>
     /// <typeparam name="T4">The fourth type.</typeparam>
-    /// <returns>A flattened <see cref="ValueTuple{T1,T2,T3,T4}"/>.</returns>
+    /// <returns>A flattened tuple.</returns>
     [Pure]
     public static (T1, T2, T3, T4) Flatten<T1, T2, T3, T4>(this (T1, T2, (T3, T4)) tuple) =>
         (tuple.Item1, tuple.Item2, tuple.Item3.Item1, tuple.Item3.Item2);
@@ -220,7 +209,7 @@ public static class Prelude
     /// <typeparam name="T2">The second type.</typeparam>
     /// <typeparam name="T3">The third type.</typeparam>
     /// <typeparam name="T4">The fourth type.</typeparam>
-    /// <returns>A flattened <see cref="ValueTuple{T1,T2,T3,T4}"/>.</returns>
+    /// <returns>A flattened tuple.</returns>
     [Pure]
     public static (T1, T2, T3, T4) Flatten<T1, T2, T3, T4>(this ((T1, T2, T3), T4) tuple) =>
         (tuple.Item1.Item1, tuple.Item1.Item2, tuple.Item1.Item3, tuple.Item2);
@@ -232,7 +221,7 @@ public static class Prelude
     /// <typeparam name="T2">The second type.</typeparam>
     /// <typeparam name="T3">The third type.</typeparam>
     /// <typeparam name="T4">The fourth type.</typeparam>
-    /// <returns>A flattened <see cref="ValueTuple{T1,T2,T3,T4}"/>.</returns>
+    /// <returns>A flattened tuple.</returns>
     [Pure]
     public static (T1, T2, T3, T4) Flatten<T1, T2, T3, T4>(this (T1, (T2, T3, T4)) tuple) =>
         (tuple.Item1, tuple.Item2.Item1, tuple.Item2.Item2, tuple.Item2.Item3);

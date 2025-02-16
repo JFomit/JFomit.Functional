@@ -289,7 +289,6 @@ public static class ResultExtensions
         }
     }
 
-    // ReSharper disable once InvalidXmlDocComment
     /// <summary>
     /// Extracts the inner <see cref="Prelude.Ok{T}"/> value. If instead <paramref name="result"/> is
     /// <see cref="Prelude.Error{E}"/> variant, throws wrapped <see cref="Exception"/>.
@@ -298,7 +297,7 @@ public static class ResultExtensions
     /// <typeparam name="T">The <see cref="Prelude.Ok{T}"/> type.</typeparam>
     /// <typeparam name="TException">The <see cref="Exception"/> error type.</typeparam>
     /// <returns>A wrapped value.</returns>
-    /// <exception cref="TException">If the <see cref="Result{TSuccess,TError}"/> was <see cref="Prelude.Error{E}"/>.</exception>
+    /// <exception cref="Exception">If the <see cref="Result{TSuccess,TError}"/> was <see cref="Prelude.Error{E}"/>.</exception>
     [Pure]
     public static T UnwrapOrThrow<T, TException>(this Result<T, TException> result)
         where TException : Exception
