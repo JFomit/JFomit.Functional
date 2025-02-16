@@ -2,3 +2,6 @@
   href: introduction.md
 - name: Getting Started
   href: getting-started.md
+
+- name: Examples
+  href: examples.md
