@@ -28,7 +28,7 @@ public interface IGenericVariant<out T>
 /// <param name="Value">The stored value.</param>
 /// <typeparam name="T">The type.</typeparam>
 [PublicAPI]
-public record struct Variant<T>(T Value)
+public readonly record struct Variant<T>(T Value)
 {
     /// <inheritdoc />
     public readonly override string ToString() => $"Variant({Value})";
