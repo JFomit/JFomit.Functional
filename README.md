@@ -12,19 +12,19 @@ So far this library has:
 The library also provides a set of common operations on these types:
 
 ```c#
-using JFomit.Functional;
+using JFomit.Functional.Extensions;
 using JFomit.Functional.Monads;
-using static Prelude;
+using static JFomit.Functional.Prelude;
 
 Console.WriteLine("Enter a number:");
 
 Option<int> parsedValue = Parse<int>(Console.ReadLine());
 parsedValue.Select(n => n * n).Switch(
-    some: (int value) => Console.WriteLine($"Your number squared is {value}!"),
-    none: () => Console.WriteLine("Failed to parse an number :_(")
+    ok: (int value) => Console.WriteLine($"Your number squared is {value}!"),
+    err: () => Console.WriteLine("Failed to parse an number :_(")
 );
 
-Option<int> Parse<T>(string? s)
+static Option<int> Parse<T>(string? s)
     where T : IParsable<T> => T.TryParse(s, null, out var value) ? Some(value) : None;
 ```
 
