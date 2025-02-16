@@ -151,6 +151,10 @@ public static class Prelude
         }
     }
 
+    /// <summary>
+    /// Wraps a value into a <see cref="Monads.Variant{T}"/>.
+    /// </summary>
+    /// <returns>A <see cref="Monads.Variant{T}"/>. </returns>
     public static Variant<T> Variant<T>(T value) => new(value);
 
     /// <summary>

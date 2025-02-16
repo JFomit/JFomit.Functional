@@ -45,6 +45,9 @@ public readonly struct Result<TSuccess, TError>
     private readonly TSuccess _success;
     private readonly TError _error;
 
+    /// <summary>
+    /// Don't use this constructor.
+    /// </summary>
     [Obsolete("Results can only be constructed with methods, such as Prelude.Ok(T) or Prelude.Error(E).", true)]
     public Result()
     {

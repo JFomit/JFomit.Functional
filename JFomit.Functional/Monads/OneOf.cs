@@ -51,6 +51,7 @@ public abstract partial record OneOf<T1, T2> : IOneOf
     /// <typeparam name="T">The type.</typeparam>
     public sealed record GenericVariant<T>(T Value) : OneOf<T1, T2>, IGenericVariant<T>
     {
+        /// <inheritdoc/>
         public T GetValue() => Value;
         /// <inheritdoc />
         public override string ToString() => $"Variant({GetValue()})";
@@ -130,6 +131,7 @@ public abstract partial record OneOf<T1, T2, T3> : IOneOf
     /// <typeparam name="T">The type.</typeparam>
     public sealed record GenericVariant<T>(T Value) : OneOf<T1, T2, T3>, IGenericVariant<T>
     {
+        /// <inheritdoc/>
         public T GetValue() => Value;
         /// <inheritdoc />
         public override string ToString() => $"Variant({GetValue()})";
@@ -204,6 +206,7 @@ public abstract partial record OneOf<T1, T2, T3, T4> : IOneOf
     /// <typeparam name="T">The type.</typeparam>
     public sealed record GenericVariant<T>(T Value) : OneOf<T1, T2, T3, T4>, IGenericVariant<T>
     {
+        /// <inheritdoc/>
         public T GetValue() => Value;
         /// <inheritdoc />
         public override string ToString() => $"Variant({GetValue()})";

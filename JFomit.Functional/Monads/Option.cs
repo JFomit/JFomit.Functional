@@ -46,6 +46,9 @@ public readonly struct Option<T> : IEnumerable<T>, IComparable<Option<T>>, IEqua
 
     private readonly T _value;
 
+    /// <summary>
+    /// Don't use this constructor.
+    /// </summary>
     [Obsolete("Options can only be constructed with methods, such as Prelude.Some(T).", true)]
     public Option()
     {
@@ -174,12 +177,14 @@ public readonly struct Option<T> : IEnumerable<T>, IComparable<Option<T>>, IEqua
     public T Expect(string message)
         => IsSome ? _value : ThrowHelper.ThrowWrongUnwrapException<T>(message);
 
+    /// <inheritdoc/>
     public bool Equals(Option<T> other)
         => IsSome
             ? other.TryUnwrap(out var value) &&
               EqualityComparer<T>.Default.Equals(_value, value)
             : other.IsNone;
 
+    /// <inheritdoc/>
     public override bool Equals([NotNullWhen(true)] object? obj)
     {
         if (obj is Option<T> other)
@@ -226,12 +231,22 @@ public readonly struct Option<T> : IEnumerable<T>, IComparable<Option<T>>, IEqua
 #endif
     }
 
+    /// <inheritdoc/>
     public static bool operator ==(Option<T> left, Option<T> right) => left.Equals(right);
+    /// <inheritdoc/>
     public static bool operator !=(Option<T> left, Option<T> right) => !(left == right);
 
+    /// <inheritdoc/>
+    /// <seealso cref="CompareTo(Option{T})"/>
     public static bool operator <(Option<T> left, Option<T> right) => left.CompareTo(right) < 0;
+    /// <inheritdoc/>
+    /// <seealso cref="CompareTo(Option{T})"/>
     public static bool operator <=(Option<T> left, Option<T> right) => left.CompareTo(right) <= 0;
+    /// <inheritdoc/>
+    /// <seealso cref="CompareTo(Option{T})"/>
     public static bool operator >(Option<T> left, Option<T> right) => left.CompareTo(right) > 0;
+    /// <inheritdoc/>
+    /// <seealso cref="CompareTo(Option{T})"/>
     public static bool operator >=(Option<T> left, Option<T> right) => left.CompareTo(right) >= 0;
 }
 
