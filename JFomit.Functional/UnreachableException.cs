@@ -7,7 +7,7 @@ namespace System.Diagnostics;
 /// <summary>
 /// Exception thrown when the program executes an instruction that was thought to be unreachable.
 /// </summary>
-public sealed class UnreachableException : Exception
+internal sealed class UnreachableException : Exception
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="UnreachableException"/> class with the default error message.
