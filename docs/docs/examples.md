@@ -10,7 +10,7 @@ FetchDb("John")
     .SelectMany(user => GetPlan(user))
     .Switch(
         ok: (Plan plan) => Console.WriteLine($"The cost is {plan.Cost}."),
-        fail: (string msg) => Console.WriteLine(msg)
+        error: (string msg) => Console.WriteLine(msg)
     );
 
 record User(string Name, int Age);
