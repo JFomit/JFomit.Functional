@@ -12,6 +12,7 @@
     <DefineConstants>JETBRAINS_ANNOTATIONS</DefineConstants>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 

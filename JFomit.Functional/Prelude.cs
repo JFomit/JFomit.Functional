@@ -117,7 +117,7 @@ public static class Prelude
     /// <returns>A <see cref="Result{TSuccess,TError}"/>, which contains a value returned by <paramref name="func"/>
     /// or thrown <see cref="Exception"/>.
     /// </returns>
-    public static Result<T, Exception> CatchExceptions<T>([InstantHandle] Func<T> func)
+    public static Result<T, Exception> Catch<T>([InstantHandle] Func<T> func)
     {
         try
         {
@@ -136,7 +136,7 @@ public static class Prelude
     /// <returns>A <see cref="Result{TSuccess,TError}"/>, which contains a <see cref="Ok"/>
     /// or thrown <see cref="Exception"/>.
     /// </returns>
-    public static Result<UnitValue, Exception> CatchExceptions([InstantHandle] Action func)
+    public static Result<UnitValue, Exception> Catch([InstantHandle] Action func)
     {
         try
         {

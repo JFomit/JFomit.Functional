@@ -210,8 +210,17 @@ public readonly struct Option<T> : IEnumerable<T>, IComparable<Option<T>>, IEqua
     /// <inheritdoc cref="object.GetHashCode()"/>
     public override int GetHashCode()
     {
-#if NETSTANDARD2_0_OR_GREATER
-        return (IsSome ? _value?.GetHashCode() : default(T)?.GetHashCode()) ?? 0;
+#if NETSTANDARD2_0
+        if (IsSome)
+        {
+            return 0;
+        }
+        unchecked // Overflow is fine, just wrap
+        {
+            const int hash = 17;
+            var vHash = _value?.GetHashCode() ?? 0;
+            return hash * 23 + vHash;
+        }
 #else
         return IsSome ? HashCode.Combine(_value) : HashCode.Combine(default(T));
 #endif
