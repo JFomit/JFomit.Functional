@@ -214,7 +214,7 @@ public readonly struct Option<T> : IEnumerable<T>, IComparable<Option<T>>, IEqua
     public override int GetHashCode()
     {
 #if NETSTANDARD2_0
-        if (IsSome)
+        if (!IsSome)
         {
             return 0;
         }
