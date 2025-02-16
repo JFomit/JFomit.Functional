@@ -4,7 +4,7 @@ _layout: landing
 
 ## About
 
-*JFomit.Functional* - is a simple C# library designed to provide common functional types and operations on them.
+[JFomit.Functional](https://github.com/JFomit/JFomit.Functional) - is a simple C# library designed to provide common functional types and operations on them.
 
 So far this library has:
 1. An `Option<T>` type, which wraps an object that might not exist;

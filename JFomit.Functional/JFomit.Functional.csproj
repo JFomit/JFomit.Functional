@@ -16,6 +16,7 @@
     </Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://jfomit.github.io/JFomit.Functional/index.html</PackageProjectUrl>
 
     <LangVersion>13</LangVersion>
     <DefineConstants>JETBRAINS_ANNOTATIONS</DefineConstants>
