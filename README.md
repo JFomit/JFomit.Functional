@@ -28,7 +28,7 @@ Option<int> Parse<T>(string? s)
     where T : IParsable<T> => T.TryParse(s, null, out var value) ? Some(value) : None;
 ```
 
-For more examples as well as complete documentation, check [...].
+For more examples as well as complete api reference, check [documentation](https://jfomit.github.io/JFomit.Functional/index.html).
 
 ## Quick Start Notes:
 
