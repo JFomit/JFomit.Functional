@@ -21,7 +21,7 @@ Console.WriteLine("Enter a number:");
 Option<int> parsedValue = Parse<int>(Console.ReadLine());
 parsedValue.Select(n => n * n).Switch(
     some: (int value) => Console.WriteLine($"Your number squared is {value}!"),
-    none: () => Console.WriteLine("Failed to parse an number :_(")
+    none: () => Console.WriteLine("Failed to parse a number :_(")
 );
 
 static Option<int> Parse<T>(string? s)
@@ -32,7 +32,7 @@ For more examples as well as complete api reference, check [documentation](https
 
 ## Quick Start Notes:
 
-Add a `JFomit.Fynctional` Nuget package to your project:
+Add a `JFomit.Functional` Nuget package to your project:
 
 ```shell
 dotnet add package JFomit.Functional
