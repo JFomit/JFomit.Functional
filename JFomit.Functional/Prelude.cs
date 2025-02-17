@@ -9,7 +9,7 @@ namespace JFomit.Functional;
 /// A class with common static methods exposed in a convenient manner.
 /// <example>
 /// <code>
-/// using static Prelude;
+/// using static JFomit.Functional.Prelude;
 /// Option&lt;int&gt; intOption = Some(42);
 /// </code>
 /// </example>
