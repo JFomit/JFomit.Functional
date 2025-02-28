@@ -6,7 +6,7 @@
     <PackageID>JFomit.Functional</PackageID>
     <Title>JFomit.Functional</Title>
     <Authors>JFomit</Authors>
-    <Version>2.1.0</Version>
+    <Version>2.1.2</Version>
     <PackageTags>Functional;Option;Result;OneOf;Discriminated Union;Library</PackageTags>
     <Description>
       This library provides common functional types and operations on them:
