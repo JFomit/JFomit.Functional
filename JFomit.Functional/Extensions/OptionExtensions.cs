@@ -283,6 +283,16 @@ public static class OptionExtensions
     /// <typeparam name="TResult">The resulting type.</typeparam>
     /// <returns>An object of <typeparamref name="TResult"/> - result of invoking either <paramref name="some"/>
     /// or <paramref name="none"/>.</returns>
+    /// <example>
+    /// <code>
+    /// Option&lt;int&gt; opt = ReadIntMayFail();
+    /// string message = opt.Match(
+    ///     some: (int i) => i.ToString(),
+    ///     none: () => "Reading int failed."
+    /// );
+    /// Console.WriteLine(message);
+    /// </code>
+    /// </example>
     public static TResult Match<T, TResult>(this Option<T> option,
         [InstantHandle] Func<T, TResult> some,
         [InstantHandle] Func<TResult> none) =>
@@ -322,6 +332,15 @@ public static class OptionExtensions
     /// <param name="some">The <see cref="Action{T,TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.Some{T}"/>.</param>
     /// <param name="none">The <see cref="Action{TResult}"/> that runs when <paramref name="option"/> is <see cref="Prelude.None"/>.</param>
     /// <typeparam name="T">The type.</typeparam>
+    /// <example>
+    /// <code>
+    /// Option&lt;int&gt; opt = ReadIntMayFail();
+    /// opt.Switch(
+    ///     some: (int i) => Console.WriteLine(i),
+    ///     none: () => Console.WriteLine("The option was None")
+    /// );
+    /// </code>
+    /// </example>
     public static void Switch<T>(
         this Option<T> option,
         [InstantHandle] Action<T> some,
@@ -406,6 +425,13 @@ public static class OptionExtensions
     /// <returns>An <see cref="Option{T}"/> of <see cref="ValueTuple{T1,T2}"/>.
     /// If either of <paramref name="option"/> or <paramref name="other"/> where <see cref="Prelude.None"/>, this method also
     /// returns <see cref="Prelude.None"/>.</returns>
+    /// <example>
+    /// <code>
+    /// var opt1 = Some(32);
+    /// var opt2 = Some("Hello, world!");
+    /// Option&lt;(int, string)&gt; tuple = opt1.Zip(opt2);
+    /// </code>
+    /// </example>
     [Pure]
     public static Option<(T1, T2)> Zip<T1, T2>(this Option<T1> option, Option<T2> other)
         => option.TryUnwrap(out var v1) && other.TryUnwrap(out var v2) ? Prelude.Some((v1, v2)) : Prelude.None;

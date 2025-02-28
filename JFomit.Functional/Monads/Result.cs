@@ -106,6 +106,27 @@ public readonly struct Result<TSuccess, TError>
         => IsSuccess ? $"Ok({Success})" : $"Error({Error})";
 
     /// <summary>
+    /// Extracts the success value and, if failed, throws a <see cref="WrongUnwrapException"/> with user-defined message.
+    /// </summary>
+    /// <param name="message">The message of thrown exception.</param>
+    /// <returns>The success value.</returns>
+    [Pure]
+    public TSuccess Expect(string message)
+        => TryUnwrapSuccess(out var success)
+            ? success
+            : ThrowHelper.ThrowWrongUnwrapException<TSuccess>(message);
+    /// <summary>
+    /// Extracts the error value and, if failed, throws a <see cref="WrongUnwrapException"/> with user-defined message.
+    /// </summary>
+    /// <param name="message">The message of thrown exception.</param>
+    /// <returns>The error value.</returns>
+    [Pure]
+    public TError ExpectError(string message)
+        => TryUnwrapError(out var error)
+            ? error
+            : ThrowHelper.ThrowWrongUnwrapException<TError>(message);
+
+    /// <summary>
     /// Extracts the inner <see cref="Prelude.Ok{T}"/> value. Throws if <see cref="Result{TSuccess,TError}"/>
     /// is <see cref="Prelude.Error{E}"/>.
     /// </summary>
