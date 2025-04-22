@@ -242,6 +242,26 @@ public readonly struct Option<T> : IComparable<Option<T>>, IEquatable<Option<T>>
     /// <inheritdoc/>
     /// <seealso cref="CompareTo(Option{T})"/>
     public static bool operator >=(Option<T> left, Option<T> right) => left.CompareTo(right) >= 0;
+
+    /// <summary>
+    /// If possible, casts the value inside this <see cref="Option{T}"/> to some other type. Will not throw exceptions.
+    /// </summary>
+    /// <typeparam name="U">The target type.</typeparam>
+    /// <returns>If this <see cref="Option{T}"/>
+    /// is <see cref="Prelude.Some{T}(T)"/> and cast succeeds, returns a wrapped value of type <typeparamref name="U"/>; otherwise, returns
+    /// <see cref="Prelude.None"/>.</returns>
+    public Option<U> OfType<U>()
+        => TryUnwrap(out var inner) && inner is U value ? Prelude.Some(value) : Prelude.None;
+    /// <summary>
+    /// Casts the value inside this <see cref="Option{T}"/> to some other type.
+    /// </summary>
+    /// <typeparam name="U">The target type.</typeparam>
+    /// <returns>If this <see cref="Option{T}"/> is <see cref="Prelude.None"/> returns
+    /// <see cref="Prelude.None"/>; otherwise, returns <see cref="Value"/> cast to <typeparamref name="U"/>.</returns>
+    /// <exception cref="InvalidCastException">If cast fails.</exception>
+    /// <remarks>Will box <see cref="Value"/> if <typeparamref name="T"/> is a valuetype.</remarks>
+    public Option<U> Cast<U>()
+        => TryUnwrap(out var inner) ? Prelude.Some((U)(object)inner) : Prelude.None;
 }
 
 /// <summary>
