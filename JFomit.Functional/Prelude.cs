@@ -17,8 +17,8 @@ namespace JFomit.Functional;
 [PublicAPI]
 public static class Prelude
 {
-    /// <inheritdoc cref="UnitValue.Unit"/>
-    public static UnitValue Unit => default;
+    /// <inheritdoc cref="Unit.Value"/>
+    public static Unit Unit => Unit.Value;
 
     /// <summary>
     /// Wraps a value into an <see cref="Option{T}"/>.
@@ -38,7 +38,7 @@ public static class Prelude
     /// </summary>
     /// <returns>An <see cref="Option{T}"/>.</returns>
     [Pure]
-    public static Option<UnitValue> Some() => new SomeVariant<UnitValue>(Unit);
+    public static Option<Unit> Some() => new SomeVariant<Unit>(Unit);
 
     /// <summary>
     /// Returns a None variant of <see cref="Option{T}"/>.
@@ -75,7 +75,7 @@ public static class Prelude
     /// </summary>
     /// <returns>An instance of <see cref="OkVariant{TSuccess}"/>, with unspecified error type.</returns>
     [Pure]
-    public static OkVariant<UnitValue> Ok() => new(Unit);
+    public static OkVariant<Unit> Ok() => new(Unit);
 
     // ReSharper disable InconsistentNaming
     /// <summary>
@@ -92,7 +92,7 @@ public static class Prelude
     /// </summary>
     /// <returns>An instance of <see cref="FailVariant{TError}"/> with unspecified success type.</returns>
     [Pure]
-    public static FailVariant<UnitValue> Error() => new(Unit);
+    public static FailVariant<Unit> Error() => new(Unit);
     // ReSharper restore InconsistentNaming
 
     /// <summary>
@@ -123,7 +123,7 @@ public static class Prelude
     /// <returns>A <see cref="Result{TSuccess,TError}"/>, which contains a <see cref="Ok"/>
     /// or thrown <see cref="Exception"/>.
     /// </returns>
-    public static Result<UnitValue, Exception> Catch([InstantHandle] Action func)
+    public static Result<Unit, Exception> Catch([InstantHandle] Action func)
     {
         try
         {
