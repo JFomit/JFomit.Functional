@@ -18,7 +18,7 @@ namespace JFomit.Functional.Monads;
 /// <seealso href="https://en.wikipedia.org/wiki/Option_type"/>
 /// <typeparam name="T">The inner type.</typeparam>
 [PublicAPI]
-public readonly struct Option<T> : IEnumerable<T>, IComparable<Option<T>>, IEquatable<Option<T>>
+public readonly struct Option<T> : IComparable<Option<T>>, IEquatable<Option<T>>
 {
     /// <summary>
     /// Weather this instance contains a valid value of type <typeparamref name="T"/>.
@@ -94,8 +94,6 @@ public readonly struct Option<T> : IEnumerable<T>, IComparable<Option<T>>, IEqua
     /// </summary>
     public override string ToString() => IsNone ? "None" : $"Some({Value})";
 
-    IEnumerator<T> IEnumerable<T>.GetEnumerator() => GetEnumerator();
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     /// <inheritdoc cref="IEnumerable{T}.GetEnumerator"/>
     public Enumerator GetEnumerator() => new(this);
 
@@ -194,12 +192,10 @@ public readonly struct Option<T> : IEnumerable<T>, IComparable<Option<T>>, IEqua
     }
 
     /// <inheritdoc cref="IEnumerator{T}"/>
-    public struct Enumerator(Option<T> option) : IEnumerator<T>
+    public struct Enumerator(Option<T> option)
     {
         /// <inheritdoc cref="IEnumerator{T}.Current"/>
         public readonly T Current => option.UnwrapOrDefault();
-
-        readonly object IEnumerator.Current => Current!;
 
         private int _pos = option.IsSome ? -1 : 0;
 
