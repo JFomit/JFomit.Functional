@@ -21,6 +21,12 @@ public static class Prelude
     public static Unit Unit => Unit.Value;
 
     /// <summary>
+    /// Discards passed value and returns a <see cref="Functional.Unit"/> instead for ease of chaining.
+    /// </summary>
+    [Pure]
+    public static Unit Discard<T>(T _) => Unit.Value;
+
+    /// <summary>
     /// Wraps a value into an <see cref="Option{T}"/>.
     /// </summary>
     /// <param name="value">The value to wrap.</param>
@@ -116,6 +122,28 @@ public static class Prelude
         }
     }
     /// <summary>
+    /// Invokes a passed delegate with some arbitrary context. If in the process of invocation an exception is thrown
+    /// it is caught and returned in <see cref="Error{E}"/> variant.
+    /// </summary>
+    /// <param name="func">The delegate to invoke.</param>
+    /// <param name="context">The passed context.</param>
+    /// <typeparam name="T">The <see cref="Ok{T}"/> type.</typeparam>
+    /// <typeparam name="TContext">The context type.</typeparam>
+    /// <returns>A <see cref="Result{TSuccess,TError}"/>, which contains a value returned by <paramref name="func"/>
+    /// or thrown <see cref="Exception"/>.
+    /// </returns>
+    public static Result<T, Exception> Catch<T, TContext>(TContext context, [InstantHandle] Func<TContext, T> func)
+    {
+        try
+        {
+            return Ok(func(context));
+        }
+        catch (Exception e)
+        {
+            return Error(e);
+        }
+    }
+    /// <summary>
     /// Invokes a passed delegate. If in the process of invocation an exception is thrown
     /// it is caught and returned in <see cref="Error{E}"/> variant.
     /// </summary>
@@ -128,6 +156,28 @@ public static class Prelude
         try
         {
             func();
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return Error(e);
+        }
+    }
+    /// <summary>
+    /// Invokes a passed delegate with some arbitrary context. If in the process of invocation an exception is thrown
+    /// it is caught and returned in <see cref="Error{E}"/> variant.
+    /// </summary>
+    /// <param name="func">The delegate to invoke.</param>
+    /// <param name="context">The passed context.</param>
+    /// <typeparam name="TContext">The context type.</typeparam>
+    /// <returns>A <see cref="Result{TSuccess,TError}"/>, which contains a <see cref="Ok"/>
+    /// or thrown <see cref="Exception"/>.
+    /// </returns>
+    public static Result<Unit, Exception> Catch<TContext>(TContext context, [InstantHandle] Action<TContext> func)
+    {
+        try
+        {
+            func(context);
             return Ok();
         }
         catch (Exception e)
