@@ -179,6 +179,37 @@ public readonly struct Result<TSuccess, TError>
     }
 
     /// <summary>
+    /// Deconstructs the value in this <see cref="Result{TSuccess, TError}"/> into both <typeparamref name="TSuccess"/> and
+    /// <typeparamref name="TError"/> returning true and false depending on what value was in the <see cref="Result{TSuccess, TError}"/>.
+    /// </summary>
+    /// <param name="success">When this method returns, contains the inner value, if this <see cref="Result{TSuccess,TError}"/>
+    /// is <see cref="Prelude.Ok{T}"/>;
+    /// otherwise, the default value for the type of the <paramref name="success"/> parameter.
+    /// This parameter is passed uninitialized.</param>
+    /// <param name="error">When this method returns, contains the inner value, if this <see cref="Result{TSuccess,TError}"/>
+    /// is <see cref="Prelude.Error{E}(E)"/>;
+    /// otherwise, the default value for the type of the <paramref name="success"/> parameter.
+    /// This parameter is passed uninitialized.</param>
+    /// <returns><see langword="true"/>, if extracted the value <see cref="Prelude.Ok{T}(T)"/> from <see cref="Result{TSuccess,TError}"/>;
+    /// false, otherwise.</returns>
+    [Pure]
+    public bool TryUnwrap2([NotNullWhen(true)] out TSuccess? success, [NotNullWhen(false)] out TError? error)
+    {
+        if (IsSuccess)
+        {
+            success = _success!;
+            error = default;
+            return true;
+        }
+        else
+        {
+            success = default;
+            error = _error!;
+            return false;
+        }
+    }
+
+    /// <summary>
     /// Extracts the inner <see cref="Prelude.Error{E}"/> value. Throws if <see cref="Result{TSuccess,TError}"/>
     /// is <see cref="Prelude.Ok{T}"/>.
     /// </summary>
