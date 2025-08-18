@@ -152,6 +152,52 @@ public static class ResultExtensions
         => result.IsError ? Error(result.Error) : func(result.Success, context);
 
     /// <summary>
+    /// Projects the value inside a <see cref="Result{TSuccess,TError}"/> to another <see cref="Result{TSuccess,TError}"/>,
+    /// flattens the output and then invokes a result selector function on projected value.
+    /// </summary>
+    /// <typeparam name="T">The <see cref="Prelude.Ok{T}"/> type.</typeparam>
+    /// <typeparam name="TNext">The intermediate <see cref="Prelude.Ok{T}(T)"/> type.</typeparam>
+    /// <typeparam name="TResult">The output type.</typeparam>
+    /// <typeparam name="E">The <see cref="Prelude.Error{E}"/> type.</typeparam>
+    /// <param name="result"></param>
+    /// <param name="selectorFunc"></param>
+    /// <param name="resultFunc"></param>
+    /// <returns>A <see cref="Result{TSuccess,TError}"/> containing resulting value.
+    /// If <paramref name="result"/> is <see cref="Prelude.Error{E}"/> or <paramref name="selectorFunc"/>
+    /// produces an <see cref="Prelude.Error{E}(E)"/>, that error is returned instead.</returns>
+    public static Result<TResult, E> SelectMany<T, TNext, TResult, E>(
+        this Result<T, E> result,
+        [InstantHandle] Func<T, Result<TNext, E>> selectorFunc,
+        [InstantHandle] Func<TNext, TResult> resultFunc)
+        => result.TryUnwrapError(out var e) ? Error(e) : selectorFunc(result.Success).Select(resultFunc);
+
+    /// <summary>
+    /// Projects the value inside a <see cref="Result{TSuccess,TError}"/> to another <see cref="Result{TSuccess,TError}"/> with some
+    /// arbitrary context, flattens the output and then invokes a result selector function (with the same context) on projected value.
+    /// </summary>
+    /// <typeparam name="T">The <see cref="Prelude.Ok{T}"/> type.</typeparam>
+    /// <typeparam name="TNext">The intermediate <see cref="Prelude.Ok{T}(T)"/> type.</typeparam>
+    /// <typeparam name="TResult">The output type.</typeparam>
+    /// <typeparam name="E">The <see cref="Prelude.Error{E}"/> type.</typeparam>
+    /// <typeparam name="TContext">The context type.</typeparam>
+    /// <param name="result"></param>
+    /// <param name="context">The context.</param>
+    /// <param name="selectorFunc"></param>
+    /// <param name="resultFunc"></param>
+    /// <returns>A <see cref="Result{TSuccess,TError}"/> containing resulting value.
+    /// If <paramref name="result"/> is <see cref="Prelude.Error{E}"/> or <paramref name="selectorFunc"/>
+    /// produces an <see cref="Prelude.Error{E}(E)"/>, that error is returned instead.</returns>
+    public static Result<TResult, E> SelectMany<T, TNext, TResult, E, TContext>(
+        this Result<T, E> result,
+        TContext context,
+        [InstantHandle] Func<T, TContext, Result<TNext, E>> selectorFunc,
+        [InstantHandle] Func<TNext, TContext, TResult> resultFunc)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
+        => result.TryUnwrapError(out var e) ? Error(e) : selectorFunc(result.Success, context).Select(context, resultFunc);
+
+    /// <summary>
     /// Projects a <see cref="Result{TSuccess, TError}"/> to a new form.
     /// </summary>
     /// <param name="result">The <see cref="Result{TSuccess,TError}"/>.</param>
