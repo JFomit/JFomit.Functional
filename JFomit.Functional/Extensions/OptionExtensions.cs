@@ -119,10 +119,12 @@ public static class OptionExtensions
         if (option.TryUnwrap(out var source))
         {
             return selectorFunc(option.Value).TryUnwrap(out var next) ?
-                Prelude.None : Prelude.Some(resultFunc(source, next!)!);
+                Prelude.Some(resultFunc(source, next!)!) : Prelude.None;
         }
-
-        return Prelude.None;
+        else
+        {
+            return Prelude.None;
+        }
     }
 
     /// <summary>
@@ -152,10 +154,12 @@ public static class OptionExtensions
         if (option.TryUnwrap(out var source))
         {
             return selectorFunc(option.Value, context).TryUnwrap(out var next) ?
-                Prelude.None : Prelude.Some(resultFunc(source, next!, context)!);
+                Prelude.Some(resultFunc(source, next!, context)!) : Prelude.None;
         }
-
-        return Prelude.None;
+        else
+        {
+            return Prelude.None;
+        }
     }
 
     /// <summary>
