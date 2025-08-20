@@ -278,7 +278,6 @@ public static class ResultExtensions
         }
     }
 
-
     /// <summary>
     /// Projects a <see cref="Result{TSuccess, TError}"/> to a new form.
     /// </summary>

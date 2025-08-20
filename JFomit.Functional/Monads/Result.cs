@@ -214,7 +214,7 @@ public readonly struct Result<TSuccess, TError>
     /// <returns><see langword="true"/>, if extracted the value <see cref="Prelude.Ok{T}(T)"/> from <see cref="Result{TSuccess,TError}"/>;
     /// false, otherwise.</returns>
     [Pure]
-    public bool TryUnwrap2([NotNullWhen(true)] out TSuccess? success, [NotNullWhen(false)] out TError? error)
+    public bool TryUnwrap2([MaybeNullWhen(false)] out TSuccess success, [MaybeNullWhen(true)] out TError error)
     {
         if (IsSuccess)
         {
