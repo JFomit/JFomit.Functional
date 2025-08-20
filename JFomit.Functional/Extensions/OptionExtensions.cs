@@ -95,6 +95,35 @@ public static class OptionExtensions
         [InstantHandle] Func<TNext, TResult> resultFunc)
         => option.IsNone ? Prelude.None : selectorFunc(option.Value).Select(resultFunc);
 
+
+    /// <summary>
+    /// Projects an element wrapped in <see cref="Option{T}"/> together with some arbitrary context to another <see cref="Option{T}"/>,
+    /// flattens the result, and invokes a result selector function (with the same context) on projected value.
+    /// If <paramref name="option"/> is <see cref="Prelude.None"/> or <paramref name="resultFunc"/> returned <see cref="Prelude.None"/>,
+    /// a <see cref="Prelude.None"/> is returned instead.
+    /// </summary>
+    /// <param name="option">The <see cref="Option{T}"/> to bind.</param>
+    /// <param name="selectorFunc">The projecting function to apply to the original value.</param>
+    /// <param name="resultFunc">The resulting function to apply to the intermediate value.</param>
+    /// <param name="context">The additional context passed.</param>
+    /// <typeparam name="T">The type.</typeparam>
+    /// <typeparam name="TContext">The context type.</typeparam>
+    /// <typeparam name="TNext">The intermediate type.</typeparam>
+    /// <typeparam name="TResult">The resulting type.</typeparam>
+    /// <returns>An <see cref="Option{T}"/> - result of invoking <paramref name="selectorFunc"/> on the
+    /// value inside <paramref name="option"/>, which is then projected by <paramref name="resultFunc"/>.
+    /// If the value was <see cref="Prelude.None"/> or <paramref name="selectorFunc"/> returned
+    /// <see cref="Prelude.None"/>, then this method returns <see cref="Prelude.None"/>.</returns>
+    public static Option<TResult> SelectMany<T, TContext, TNext, TResult>(
+        this Option<T> option,
+        TContext context,
+        [InstantHandle] Func<T, TContext, Option<TNext>> selectorFunc,
+        [InstantHandle] Func<TNext, TContext, TResult> resultFunc)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
+        => option.IsNone ? Prelude.None : selectorFunc(option.Value, context).Select(context, resultFunc);
+
     /// <summary>
     /// Projects an element wrapped in <see cref="Option{T}"/> to another <see cref="Option{T}"/>,
     /// flattens the result, and invokes a result selector function on projected value as well as the original one.
@@ -150,6 +179,9 @@ public static class OptionExtensions
         TContext context,
         [InstantHandle] Func<T, TContext, Option<TNext>> selectorFunc,
         [InstantHandle] Func<T, TNext, TContext, TResult> resultFunc)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         if (option.TryUnwrap(out var source))
         {
@@ -161,34 +193,6 @@ public static class OptionExtensions
             return Prelude.None;
         }
     }
-
-    /// <summary>
-    /// Projects an element wrapped in <see cref="Option{T}"/> together with some arbitrary context to another <see cref="Option{T}"/>,
-    /// flattens the result, and invokes a result selector function (with the same context) on projected value.
-    /// If <paramref name="option"/> is <see cref="Prelude.None"/> or <paramref name="resultFunc"/> returned <see cref="Prelude.None"/>,
-    /// a <see cref="Prelude.None"/> is returned instead.
-    /// </summary>
-    /// <param name="option">The <see cref="Option{T}"/> to bind.</param>
-    /// <param name="selectorFunc">The projecting function to apply to the original value.</param>
-    /// <param name="resultFunc">The resulting function to apply to the intermediate value.</param>
-    /// <param name="context">The additional context passed.</param>
-    /// <typeparam name="T">The type.</typeparam>
-    /// <typeparam name="TContext">The context type.</typeparam>
-    /// <typeparam name="TNext">The intermediate type.</typeparam>
-    /// <typeparam name="TResult">The resulting type.</typeparam>
-    /// <returns>An <see cref="Option{T}"/> - result of invoking <paramref name="selectorFunc"/> on the
-    /// value inside <paramref name="option"/>, which is then projected by <paramref name="resultFunc"/>.
-    /// If the value was <see cref="Prelude.None"/> or <paramref name="selectorFunc"/> returned
-    /// <see cref="Prelude.None"/>, then this method returns <see cref="Prelude.None"/>.</returns>
-    public static Option<TResult> SelectMany<T, TContext, TNext, TResult>(
-        this Option<T> option,
-        TContext context,
-        [InstantHandle] Func<T, TContext, Option<TNext>> selectorFunc,
-        [InstantHandle] Func<TNext, TContext, TResult> resultFunc)
-#if NET9_0_OR_GREATER
-        where TContext : allows ref struct
-#endif
-        => option.IsNone ? Prelude.None : selectorFunc(option.Value, context).Select(context, resultFunc);
 
     /// <summary>
     /// Projects an element wrapped in <see cref="Option{T}"/> to a new form and

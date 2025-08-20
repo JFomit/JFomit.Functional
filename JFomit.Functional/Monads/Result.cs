@@ -177,7 +177,7 @@ public readonly struct Result<TSuccess, TError>
         success = default;
         return false;
     }
-
+    
     /// <summary>
     /// Deconstructs the value in this <see cref="Result{TSuccess, TError}"/> into both <typeparamref name="TSuccess"/> and
     /// <typeparamref name="TError"/> returning true and false depending on what value was in the <see cref="Result{TSuccess, TError}"/>.

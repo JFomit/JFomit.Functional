@@ -4,6 +4,7 @@ using JFomit.Functional.Monads;
 
 namespace JFomit.Functional;
 
+[DebuggerStepThrough]
 internal static class ThrowHelper
 {
     [DoesNotReturn]
