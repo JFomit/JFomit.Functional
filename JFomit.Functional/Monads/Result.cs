@@ -27,20 +27,41 @@ public readonly struct Result<TSuccess, TError>
     /// Extracts the inner <typeparamref name="TSuccess"/> value. Throws on <see cref="Prelude.Error{E}"/>.
     /// </summary>
     /// <exception cref="WrongUnwrapException">if this <see cref="Result{TSuccess,TError}"/> is <see cref="Prelude.Error{E}"/>.</exception>
-    public TSuccess Success =>
-        IsSuccess
-            ? _success
-            : ThrowHelper.ThrowWrongUnwrapException<TSuccess>(
-                "Tried to get the value from a 'Error' variant of Result<TSuccess, TError>.");
+    public TSuccess Success
+    {
+        get
+        {
+            if (IsSuccess)
+            {
+                return _success;
+            }
+            else
+            {
+                ThrowHelper.ThrowWrongUnwrapException("Tried to get the value from a 'Error' variant of Result<TSuccess, TError>.");
+                return default!;
+            }
+        }
+    }
+
     /// <summary>
     /// Extracts the inner <typeparamref name="TError"/> value. Throws on <see cref="Prelude.Ok{T}"/>.
     /// </summary>
     /// <exception cref="WrongUnwrapException">if this <see cref="Result{TSuccess,TError}"/> is <see cref="Prelude.Ok{T}"/>.</exception>
-    public TError Error =>
-        IsError
-            ? _error
-            : ThrowHelper.ThrowWrongUnwrapException<TError>(
-                "Tried to get the error from a 'Success' variant of Result<TSuccess, TError>.");
+    public TError Error
+    {
+        get
+        {
+            if (IsError)
+            {
+                return _error;
+            }
+            else
+            {
+                ThrowHelper.ThrowWrongUnwrapException("Tried to get the error from a 'Success' variant of Result<TSuccess, TError>.");
+                return default!;
+            }
+        }
+    }
 
     private readonly TSuccess _success;
     private readonly TError _error;

@@ -503,10 +503,18 @@ public static class ResultExtensions
     /// <returns>A wrapped value.</returns>
     /// <exception cref="WrongUnwrapException">If <paramref name="result"/> is <see cref="Prelude.Error{E}"/>.</exception>
     [Pure]
-    public static T Unwrap<T>(this Result<T, string> result) =>
-        result.IsSuccess
-            ? result.Success
-            : ThrowHelper.ThrowWrongUnwrapException<T>(result.Error);
+    public static T Unwrap<T>(this Result<T, string> result)
+    {
+        if (result.IsSuccess)
+        {
+            return result.Success;
+        }
+        else
+        {
+            ThrowHelper.ThrowWrongUnwrapException(result.Error);
+            return default!;
+        }
+    }
 
     /// <summary>
     /// Converts the given <see cref="Result{TSuccess,TError}"/> to an <see cref="Option{T}"/>.

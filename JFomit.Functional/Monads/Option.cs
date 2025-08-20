@@ -41,7 +41,18 @@ public readonly struct Option<T> : IComparable<Option<T>>, IEquatable<Option<T>>
     {
         // Pulling throw out increases chances of Option<T>.Value to be inlined
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        get => IsSome ? _value : ThrowHelper.ThrowWrongUnwrapException<T>("Tried to get the value from a 'None' variant of Option<T>.");
+        get
+        {
+            if (IsSome)
+            {
+                return _value;
+            }
+            else
+            {
+                ThrowHelper.ThrowWrongUnwrapException("Tried to get the value from a 'None' variant of Option<T>.");
+                return default!;
+            }
+        }
     }
 
     private readonly T _value;
