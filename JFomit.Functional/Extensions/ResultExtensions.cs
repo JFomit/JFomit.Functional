@@ -100,6 +100,8 @@ public static class ResultExtensions
     /// <typeparam name="EResult">The resulting <see cref="Prelude.Error{T}"/> type.</typeparam>
     /// <returns>A <see cref="Result{TSuccess,TError}"/> containing projected error.
     /// If <paramref name="result"/> is <see cref="Prelude.Ok{T}"/>, that success value is returned instead</returns>
+    [Obsolete("This method is deprecated and will be removed in the future version. " +
+              "Use the SelectError method instead.")]
     public static Result<T, EResult> Select<T, E, EResult>(this Result<T, E> result, [InstantHandle] Func<E, EResult> func) => result.IsSuccess ? Ok(result.Success) : Error(func(result.Error));
     /// <summary>
     /// Projects a wrapped <see cref="Prelude.Error{T}"/> value together with some arbitrary context
@@ -114,7 +116,39 @@ public static class ResultExtensions
     /// <typeparam name="TContext">The context type.</typeparam>
     /// <returns>A <see cref="Result{TSuccess,TError}"/> containing projected error.
     /// If <paramref name="result"/> is <see cref="Prelude.Ok{E}"/>, that success value is returned instead.</returns>
+    [Obsolete("This method is deprecated and will be removed in the future version. " +
+              "Use the SelectError method instead.")]
     public static Result<T, EResult> Select<T, E, EResult, TContext>(this Result<T, E> result, TContext context, [InstantHandle] Func<E, TContext, EResult> func)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
+        => result.IsSuccess ? Ok(result.Success) : Error(func(result.Error, context));
+
+    /// <summary>
+    /// Projects a wrapped <see cref="Prelude.Error{T}"/> value to a new form and wraps the output into another <see cref="Result{TSuccess,TError}"/>.
+    /// </summary>
+    /// <param name="result">The <see cref="Result{TSuccess,TError}"/>.</param>
+    /// <param name="func">The selector function.</param>
+    /// <typeparam name="T">The <see cref="Prelude.Ok{T}"/> type.</typeparam>
+    /// <typeparam name="E">The <see cref="Prelude.Error{E}"/> type.</typeparam>
+    /// <typeparam name="EResult">The resulting <see cref="Prelude.Error{T}"/> type.</typeparam>
+    /// <returns>A <see cref="Result{TSuccess,TError}"/> containing projected error.
+    /// If <paramref name="result"/> is <see cref="Prelude.Ok{T}"/>, that success value is returned instead</returns>
+    public static Result<T, EResult> SelectError<T, E, EResult>(this Result<T, E> result, [InstantHandle] Func<E, EResult> func) => result.IsSuccess ? Ok(result.Success) : Error(func(result.Error));
+    /// <summary>
+    /// Projects a wrapped <see cref="Prelude.Error{T}"/> value together with some arbitrary context
+    /// to a new form and wraps the output into another <see cref="Result{TSuccess,TError}"/>.
+    /// </summary>
+    /// <param name="result">The <see cref="Result{TSuccess,TError}"/>.</param>
+    /// <param name="context">The context to pass.</param>
+    /// <param name="func">The selector function.</param>
+    /// <typeparam name="T">The <see cref="Prelude.Ok{T}"/> type.</typeparam>
+    /// <typeparam name="EResult">The resulting <see cref="Prelude.Error{T}"/> type.</typeparam>
+    /// <typeparam name="E">The <see cref="Prelude.Error{E}"/> type.</typeparam>
+    /// <typeparam name="TContext">The context type.</typeparam>
+    /// <returns>A <see cref="Result{TSuccess,TError}"/> containing projected error.
+    /// If <paramref name="result"/> is <see cref="Prelude.Ok{E}"/>, that success value is returned instead.</returns>
+    public static Result<T, EResult> SelectError<T, E, EResult, TContext>(this Result<T, E> result, TContext context, [InstantHandle] Func<E, TContext, EResult> func)
 #if NET9_0_OR_GREATER
         where TContext : allows ref struct
 #endif
