@@ -285,6 +285,12 @@ public readonly record struct SomeVariant<T>(T Value)
 {
     /// <inheritdoc cref="object.ToString"/>
     public override string ToString() => $"Some({Value})";
+
+    /// <summary>
+    /// Converts this <see cref="SomeVariant{T}"/> into a proper <see cref="Option{T}"/>.
+    /// </summary>
+    /// <returns>An <see cref="Option{T}"/>.</returns>
+    public Option<T> ToOption() => this;
 }
 
 /// <summary>
@@ -295,6 +301,13 @@ public readonly record struct NoneVariant
 {
     /// <inheritdoc cref="object.ToString"/>
     public override string ToString() => "None";
+
+    /// <summary>
+    /// Converts this <see cref="NoneVariant"/> into a proper <see cref="Option{T}"/> with specified <see cref="Prelude.Some{T}(T)"/> type.
+    /// </summary>
+    /// <typeparam name="T">The <see cref="Prelude.Some{T}(T)"/> type.</typeparam>
+    /// <returns>An <see cref="Option{T}"/>.</returns>
+    public Option<T> ToOption<T>() => this;
 }
 /// <summary>
 /// Typed <see cref="Prelude.None"/> variant.
@@ -311,6 +324,12 @@ public readonly record struct NoneVariant<T>
     public static implicit operator NoneVariant<T>(NoneVariant _) => new();
     /// <inheritdoc cref="object.ToString"/>
     public override string ToString() => $"None<{typeof(T).Name}>";
+
+    /// <summary>
+    /// Converts this <see cref="NoneVariant{T}"/> into a proper <see cref="Option{T}"/>.
+    /// </summary>
+    /// <returns>An <see cref="Option{T}"/>.</returns>
+    public Option<T> ToOption() => this;
 }
 /// <summary>
 /// Double-typed <see cref="Prelude.None"/> variant.

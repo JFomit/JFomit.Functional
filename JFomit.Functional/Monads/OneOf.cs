@@ -32,6 +32,28 @@ public readonly record struct Variant<T>(T Value)
 {
     /// <inheritdoc />
     public readonly override string ToString() => $"Variant({Value})";
+
+    /// <summary>
+    /// Converts this <see cref="Variant{T}"/> into a proper <see cref="OneOf{T1, T2}"/>.
+    /// </summary>
+    /// <typeparam name="T2">The second type.</typeparam>
+    /// <returns>A <see cref="OneOf{T1, T2}"/>.</returns>
+    public OneOf<T, T2> ToOneOf<T2>() => this;
+    /// <summary>
+    /// Converts this <see cref="Variant{T}"/> into a proper <see cref="OneOf{T1, T2, T3}"/>.
+    /// </summary>
+    /// <typeparam name="T2">The second type.</typeparam>
+    /// <typeparam name="T3">The third type.</typeparam>
+    /// <returns>A <see cref="OneOf{T1, T2, T3}"/>.</returns>
+    public OneOf<T, T2, T3> ToOneOf<T2, T3>() => this;
+    /// <summary>
+    /// Converts this <see cref="Variant{T}"/> into a proper <see cref="OneOf{T1, T2, T3, T4}"/>.
+    /// </summary>
+    /// <typeparam name="T2">The second type.</typeparam>
+    /// <typeparam name="T3">The third type.</typeparam>
+    /// <typeparam name="T4">The fourth type.</typeparam>
+    /// <returns>A <see cref="OneOf{T1, T2, T3, T4}"/>.</returns>
+    public OneOf<T, T2, T3, T4> ToOneOf<T2, T3, T4>() => this;
 }
 
 /// <summary>
@@ -48,7 +70,7 @@ public abstract partial record OneOf<T1, T2> : IOneOf
     /// A variant for <see cref="OneOf{T1,T2}"/>.
     /// </summary>
     /// <param name="Value">The stored value.</param>
-    /// <typeparam name="T">The type.</typeparam>
+    /// <typeparam name="T">The type.</typeparam>]
     public sealed record GenericVariant<T>(T Value) : OneOf<T1, T2>, IGenericVariant<T>
     {
         /// <inheritdoc/>

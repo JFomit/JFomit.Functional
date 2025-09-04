@@ -294,6 +294,13 @@ public readonly record struct OkVariant<TSuccess>(TSuccess Success)
 {
     /// <inheritdoc cref="object.ToString"/>
     public override string ToString() => $"Ok({Success})";
+
+    /// <summary>
+    /// Converts this <see cref="OkVariant{TSuccess}"/> into a proper <see cref="Result{TSuccess, TError}"/>.
+    /// </summary>
+    /// <typeparam name="TError">The <see cref="Prelude.Error{T}(T)"/> type.</typeparam>
+    /// <returns>A <see cref="Result{TSuccess, TError}"/>.</returns>
+    public Result<TSuccess, TError> ToResult<TError>() => this;
 }
 /// <summary>
 /// The <see cref="Prelude.Error{E}"/> variant.
@@ -304,4 +311,11 @@ public readonly record struct FailVariant<TError>(TError Error)
 {
     /// <inheritdoc cref="object.ToString"/>
     public override string ToString() => $"Error({Error})";
+
+    /// <summary>
+    /// Converts this <see cref="FailVariant{TError}"/> into a proper <see cref="Result{TSuccess, TError}"/>.
+    /// </summary>
+    /// <typeparam name="TSuccess">The <see cref="Prelude.Ok{T}(T)"/> type.</typeparam>
+    /// <returns>A <see cref="Result{TSuccess, TError}"/>.</returns>
+    public Result<TSuccess, TError> ToResult<TSuccess>() => this;
 }
