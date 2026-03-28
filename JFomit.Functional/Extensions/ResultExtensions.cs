@@ -601,6 +601,9 @@ public static class ResultExtensions
         Result<T2, E> other,
         TContext context,
         [InstantHandle] Func<T1, T2, TContext, TResult> selector)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
         =>
             result.TryUnwrapSuccess(out var v1) && other.TryUnwrapSuccess(out var v2)
                 ? Ok(selector(v1, v2, context))

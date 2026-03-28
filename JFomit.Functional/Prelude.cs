@@ -133,6 +133,9 @@ public static class Prelude
     /// or thrown <see cref="Exception"/>.
     /// </returns>
     public static Result<T, Exception> Catch<T, TContext>(TContext context, [InstantHandle] Func<TContext, T> func)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         try
         {
@@ -174,6 +177,9 @@ public static class Prelude
     /// or thrown <see cref="Exception"/>.
     /// </returns>
     public static Result<Unit, Exception> Catch<TContext>(TContext context, [InstantHandle] Action<TContext> func)
+#if NET9_0_OR_GREATER
+        where TContext : allows ref struct
+#endif
     {
         try
         {
